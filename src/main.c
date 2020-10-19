@@ -5,32 +5,24 @@
 
 extern void sort(long long *unsorted_array, long long *result_array, int size_of_array);
 
-/*int the_string_starts_with(char *string, char *substring){
-    unsigned int length_of_substring = strlen(substring);
-    if (strlen(string) < length_of_substring) return 0;
-    for (int i = 0; i<length_of_substring; i++){
-        if (string[i] != substring[i]) return 0;
-    }
-    return 1;
-}*/
-
 int enter_args(int *from, int *to, bool *there_is_from, bool *there_is_to, int argc, char **argv){
-    char strfrom[8] = "--from=", strto[6] = "--to=";
+    const char *strfrom = "--from=", *strto = "--to=";
     if (argc < 2) return -1; //введено 0 параметров
     if (argc > 3) return -2; //введено 3 и более параметров
     for (int i = 1; i < argc; i++){
-        if (strncmp(argv[i], strfrom, strlen(strfrom)) == 0){
+        char *current_parameter = argv[i], *end_of_current_parameter = current_parameter + strlen(current_parameter);
+        if (strncmp(current_parameter, strfrom, strlen(strfrom)) == 0){
             if (*there_is_from) return -3; //from введён более 1-ого раза
             *there_is_from = 1;
-            *from = strtol(argv[i] + strlen(strfrom), argv[i] + strlen(argv[i]), 10);
+            *from = strtol(current_parameter + strlen(strfrom), &end_of_current_parameter, 10);
         }
-        if (strncmp(argv[i], strto, strlen(strto)) == 0) {
+        if (strncmp(current_parameter, strto, strlen(strto)) == 0) {
             if (*there_is_to) return -3; //to введён более 1-ого раза
             *there_is_to = 1;
-            *to = strtol(argv[i] + strlen(strto), argv[i] + strlen(argv[i]), 10);
+            *to = strtol(current_parameter + strlen(strto), &end_of_current_parameter, 10);
         }
     }
-    if (*there_is_from || *there_is_to == 0) return -4; //нет ни одного корректного аргумента
+    if ((*there_is_from || *there_is_to) == 0) return -4; //нет ни одного корректного аргумента
     else return 0; //всё хорошо
 }
 
@@ -49,8 +41,8 @@ void get_rid_of(int *initial_array_length, long long *initial_array,
             from_to_checker = 0;
         }
         if (from_to_checker) {
-            *array_length = *array_length+1;
             array[*array_length] = initial_array[i];
+            *array_length = *array_length+1;
         }
     }
 }
@@ -87,6 +79,12 @@ int main(int argc, char **argv){
 
     long long sorted_array[max_length];
     sort(array, sorted_array, array_length);
+
+    fprintf(stdout, "\n");
+    for (int i = 0; i<array_length; i++) fprintf(stdout, "%lld ", array[i]);
+
+    fprintf(stdout, "\n");
+    for (int i = 0; i<array_length; i++) fprintf(stdout, "%lld ", sorted_array[i]);
 
     return compare(array, sorted_array, array_length);
 }

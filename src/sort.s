@@ -55,27 +55,27 @@ sort:
 	movq	(%rax), %rax
 	cmpq	%rax, %rdx
 	jle	.L6
-	movl	-16(%rbp), %eax
+	movl	-12(%rbp), %eax
 	cltq
 	leaq	0(,%rax,8), %rdx
 	movq	-48(%rbp), %rax
 	addq	%rdx, %rax
 	movq	(%rax), %rax
 	movq	%rax, -8(%rbp)
-	movl	-16(%rbp), %eax
+	movl	-12(%rbp), %eax
 	cltq
 	addq	$1, %rax
 	leaq	0(,%rax,8), %rdx
 	movq	-48(%rbp), %rax
 	addq	%rdx, %rax
-	movl	-16(%rbp), %edx
+	movl	-12(%rbp), %edx
 	movslq	%edx, %rdx
 	leaq	0(,%rdx,8), %rcx
 	movq	-48(%rbp), %rdx
 	addq	%rcx, %rdx
 	movq	(%rax), %rax
 	movq	%rax, (%rdx)
-	movl	-16(%rbp), %eax
+	movl	-12(%rbp), %eax
 	cltq
 	addq	$1, %rax
 	leaq	0(,%rax,8), %rdx
@@ -86,15 +86,13 @@ sort:
 .L6:
 	addl	$1, -12(%rbp)
 .L5:
-	movl	-52(%rbp), %eax
-	subl	-16(%rbp), %eax
-	cmpl	%eax, -12(%rbp)
+	movl	-12(%rbp), %eax
+	cmpl	-52(%rbp), %eax
 	jl	.L7
 	addl	$1, -16(%rbp)
 .L4:
-	movl	-52(%rbp), %eax
-	subl	$1, %eax
-	cmpl	%eax, -16(%rbp)
+	movl	-16(%rbp), %eax
+	cmpl	-52(%rbp), %eax
 	jl	.L8
 	nop
 	nop
