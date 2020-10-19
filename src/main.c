@@ -80,11 +80,5 @@ int main(int argc, char **argv){
     long long sorted_array[max_length];
     sort(array, sorted_array, array_length);
 
-    fprintf(stdout, "\n");
-    for (int i = 0; i<array_length; i++) fprintf(stdout, "%lld ", array[i]);
-
-    fprintf(stdout, "\n");
-    for (int i = 0; i<array_length; i++) fprintf(stdout, "%lld ", sorted_array[i]);
-
     return compare(array, sorted_array, array_length);
 }
