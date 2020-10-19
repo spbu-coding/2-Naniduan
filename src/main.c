@@ -9,20 +9,24 @@ int enter_args(int *from, int *to, bool *there_is_from, bool *there_is_to, int a
     const char *strfrom = "--from=", *strto = "--to=";
     if (argc < 2) return -1; //введено 0 параметров
     if (argc > 3) return -2; //введено 3 и более параметров
+
     for (int i = 1; i < argc; i++){
         char *current_parameter = argv[i], *end_of_current_parameter = current_parameter + strlen(current_parameter);
+
         if (strncmp(current_parameter, strfrom, strlen(strfrom)) == 0){
             if (*there_is_from) return -3; //from введён более 1-ого раза
-            *there_is_from = 1;
+            *there_is_from = true;
             *from = strtol(current_parameter + strlen(strfrom), &end_of_current_parameter, 10);
         }
+
         if (strncmp(current_parameter, strto, strlen(strto)) == 0) {
             if (*there_is_to) return -3; //to введён более 1-ого раза
-            *there_is_to = 1;
+            *there_is_to = true;
             *to = strtol(current_parameter + strlen(strto), &end_of_current_parameter, 10);
         }
     }
-    if ((*there_is_from || *there_is_to) == 0) return -4; //нет ни одного корректного аргумента
+
+    if ((*there_is_from || *there_is_to) == false) return -4; //нет ни одного корректного аргумента
     else return 0; //всё хорошо
 }
 
@@ -30,15 +34,17 @@ void get_rid_of(int *initial_array_length, long long *initial_array,
                 int *array_length, long long *array,
                 bool there_is_from, bool there_is_to,
                 int *from, int *to){
+
     for (int i = 0; i<*initial_array_length; i++){
-        int from_to_checker = 1;
+        bool from_to_checker = true;
+
         if (there_is_from && initial_array[i] <= *from) {
             fprintf(stdout, "%lld ", initial_array[i]);
-            from_to_checker = 0;
+            from_to_checker = false;
         }
         if (there_is_to && initial_array[i] >= *to) {
             fprintf(stderr, "%lld ", initial_array[i]);
-            from_to_checker = 0;
+            from_to_checker = false;
         }
         if (from_to_checker) {
             array[*array_length] = initial_array[i];
