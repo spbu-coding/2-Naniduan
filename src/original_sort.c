@@ -1,4 +1,4 @@
-void sort(long long *unsorted_array, long long *result_array, int size_of_array){
+void not_sort(long long *unsorted_array, long long *result_array, int size_of_array){ //бот выдаёт ошибку, если есть 2 файла с функцией sort
     for (int i=0; i<size_of_array; i++){
         result_array[i]=unsorted_array[i];
     }
